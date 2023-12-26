@@ -27,14 +27,8 @@ object Dependencies {
     // security
     const val SPRING_SECURITY = "org.springframework.boot:spring-boot-starter-security"
 
-    // Cloud Config
-    const val CLOUD_CONFIG = "org.springframework.cloud:spring-cloud-config-client"
-
     // cloud
     const val SPRING_CLOUD = "org.springframework.cloud:spring-cloud-dependencies:${DependencyVersions.SPRING_CLOUD_VERSION}"
-
-    // open feign
-    const val OPEN_FEIGN = "org.springframework.cloud:spring-cloud-starter-openfeign:${DependencyVersions.OPEN_FEIGN_VERSION}"
 
     //aws
     const val AWS = "com.amazonaws:aws-java-sdk-s3:${DependencyVersions.AWS}"
