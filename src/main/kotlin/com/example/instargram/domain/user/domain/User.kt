@@ -37,12 +37,12 @@ class User(
     @Column(name = "profile_recommend", nullable = false, columnDefinition = "VARCHAR(100)")
     val recommend: Boolean,
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "sex", nullable = false)
+    @Enumerated(EnumType.STRING)
     val sex: Sex,
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "profile_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     val profileType: ProfileType
 
 ): BaseUUIDEntity(id) {
