@@ -17,16 +17,13 @@ class User(
     val accountId: String,
 
     @Column(name = "email", nullable = true, unique = true, columnDefinition = "VARCHAR(60)")
-    val email: String,
+    val info: String,
 
     @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(30)")
     val name: String,
 
     @Column(name = "self_introduce", nullable = true, columnDefinition = "VARCHAR(60)")
     val selfIntroduce: String,
-
-    @Column(name = "phone_number", nullable = true, unique = false, columnDefinition = "CHAR(9)")
-    val phoneNumber: String,
 
     @Column(name = "profile_link", nullable = true, )
     val profileLink: String,
