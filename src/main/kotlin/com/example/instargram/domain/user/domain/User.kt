@@ -9,32 +9,32 @@ import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
 
-@Entity
+@Entity(name = "tbl_user")
 class User(
     id: UUID? = null,
 
-    @Column(name = "account_id", nullable = false, unique = true)
+    @Column(name = "account_id", nullable = false, unique = true, columnDefinition = "VARCHAR(60)")
     val accountId: String,
 
-    @Column(name = "email", nullable = true, unique = true)
+    @Column(name = "email", nullable = true, unique = true, columnDefinition = "VARCHAR(60)")
     val email: String,
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(30)")
     val name: String,
 
-    @Column(name = "self_introduce", nullable = true)
+    @Column(name = "self_introduce", nullable = true, columnDefinition = "VARCHAR(60)")
     val selfIntroduce: String,
 
-    @Column(name = "phone_number", nullable = true, unique = false)
+    @Column(name = "phone_number", nullable = true, unique = false, columnDefinition = "CHAR(9)")
     val phoneNumber: String,
 
-    @Column(name = "profile_link", nullable = true)
+    @Column(name = "profile_link", nullable = true, )
     val profileLink: String,
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(60)")
     val password: String,
 
-    @Column(name = "profile_recommend", nullable = false)
+    @Column(name = "profile_recommend", nullable = false, columnDefinition = "VARCHAR(100)")
     val recommend: Boolean,
 
     @Enumerated(EnumType.STRING)
