@@ -16,7 +16,10 @@ class UserSignupService(
             info = request.info,
             password = request.password,
             accountId = request.accountId,
-            name = request.name
+            name = request.name,
+            year = request.year,
+            month = request.month,
+            day = request.day
         )
         userRepository.save(user)
     }

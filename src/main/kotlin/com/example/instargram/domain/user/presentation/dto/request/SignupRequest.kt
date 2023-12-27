@@ -1,6 +1,7 @@
 package com.example.instargram.domain.user.presentation.dto.request
 
 import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 
 data class SignupRequest (
@@ -18,5 +19,14 @@ data class SignupRequest (
     @NotBlank(message = "accountId은 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다.")
     val accountId: String,
 
-    val name: String
+    val name: String,
+
+    @NotNull
+    val year: Int,
+
+    @NotNull
+    val month: Int,
+
+    @NotNull
+    val day: Int
 )

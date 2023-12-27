@@ -34,6 +34,15 @@ class User(
     @Column(name = "profile_recommend", nullable = false, columnDefinition = "VARCHAR(100)")
     val recommend: Boolean? = null,
 
+    @Column(name = "year", nullable = false, columnDefinition = "Integer(2500)")
+    val year: Int,
+
+    @Column(name = "month", nullable = false, columnDefinition = "Integer(12)")
+    val month: Int,
+
+    @Column(name = "day", nullable = false, columnDefinition = "Integer(31)")
+    val day: Int,
+
     @Column(name = "sex", nullable = false)
     @Enumerated(EnumType.STRING)
     val sex: Sex? = null,
