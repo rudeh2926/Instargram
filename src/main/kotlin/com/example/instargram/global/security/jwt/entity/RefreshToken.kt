@@ -6,7 +6,7 @@ import org.springframework.data.redis.core.RedisHash
 @RedisHash
 class RefreshToken (
     @Id
-    val email : String,
+    val name : String,
     val refreshToken: String,
     val refreshTokenTime : Long
 )

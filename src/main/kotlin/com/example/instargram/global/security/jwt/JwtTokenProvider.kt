@@ -23,19 +23,19 @@ class JwtTokenProvider(
     private val authDetailsService: AuthDetailsService,
     private val refreshTokenRepository: RefreshTokenRepository
 ) {
-    fun getToken(email: String): TokenResponse {
-        val accessToken: String = generateToken(email, jwtProperties.accessExp)
-        val refreshToken: String = generateRefreshToken(email)
+    fun getToken(name: String): TokenResponse {
+        val accessToken: String = generateAccessToken(name, jwtProperties.accessExp)
+        val refreshToken: String = generateSaveRefreshToken(name)
         return TokenResponse(accessToken = accessToken, refreshToken = refreshToken)
     }
 
-    fun generateRefreshToken(email: String): String {
-        val newRefreshToken: String = generateToken(email, jwtProperties.refreshExp)
+    fun generateSaveRefreshToken(name: String): String {
+        val newRefreshToken: String = generateRefreshToken(name, jwtProperties.refreshExp)
         val currentTimeMillis = System.currentTimeMillis()
         val expirationTime = currentTimeMillis + (jwtProperties.refreshExp * 1000)
         refreshTokenRepository.save(
             RefreshToken(
-                email = email,
+                name = name,
                 refreshToken = newRefreshToken,
                 refreshTokenTime = expirationTime
             )
@@ -43,10 +43,19 @@ class JwtTokenProvider(
         return newRefreshToken
     }
 
-    private fun generateToken(email: String, expiration: Long): String {
+    private fun generateAccessToken(name: String, expiration: Long): String {
         return Jwts.builder().signWith(SignatureAlgorithm.HS256, jwtProperties.secret)
-            .setSubject(email)
+            .setSubject(name)
             .setHeaderParam("typ", "access")
+            .setIssuedAt(Date())
+            .setExpiration(Date(System.currentTimeMillis() + expiration * 1000))
+            .compact()
+    }
+
+    private fun generateRefreshToken(name: String, expiration: Long): String {
+        return Jwts.builder().signWith(SignatureAlgorithm.HS256, jwtProperties.secret)
+            .setSubject(name)
+            .setHeaderParam("typ", "refresh")
             .setIssuedAt(Date())
             .setExpiration(Date(System.currentTimeMillis() + expiration * 1000))
             .compact()
