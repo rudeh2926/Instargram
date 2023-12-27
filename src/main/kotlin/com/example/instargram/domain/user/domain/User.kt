@@ -23,24 +23,24 @@ class User(
     val name: String,
 
     @Column(name = "self_introduce", nullable = true, columnDefinition = "VARCHAR(60)")
-    val selfIntroduce: String,
+    val selfIntroduce: String? = null,
 
     @Column(name = "profile_link", nullable = true, )
-    val profileLink: String,
+    val profileLink: String? = null,
 
     @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(60)")
     val password: String,
 
     @Column(name = "profile_recommend", nullable = false, columnDefinition = "VARCHAR(100)")
-    val recommend: Boolean,
+    val recommend: Boolean? = null,
 
     @Column(name = "sex", nullable = false)
     @Enumerated(EnumType.STRING)
-    val sex: Sex,
+    val sex: Sex? = null,
 
     @Column(name = "profile_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    val profileType: ProfileType
+    val profileType: ProfileType? = null
 
 ): BaseUUIDEntity(id) {
 }
