@@ -10,10 +10,10 @@ class UserFacade(
     private val userRepository: UserRepository
 ) {
     fun getCurrentUser(): User {
-        val email = SecurityContextHolder.getContext().authentication.name
-        return getUserByEmail(email)
+        val accountId = SecurityContextHolder.getContext().authentication.name
+        return getUserByAccountId(accountId)
     }
 
-    fun getUserByEmail(email: String): User =
-        userRepository.findByEmail(email)
+    fun getUserByAccountId(accountId: String): User =
+        userRepository.findByAccountId(accountId)
 }
