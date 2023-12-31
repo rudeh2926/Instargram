@@ -23,19 +23,19 @@ class JwtTokenProvider(
     private val authDetailsService: AuthDetailsService,
     private val refreshTokenRepository: RefreshTokenRepository
 ) {
-    fun getToken(accountId: String): TokenResponse {
-        val accessToken: String = generateAccessToken(accountId, jwtProperties.accessExp)
-        val refreshToken: String = generateSaveRefreshToken(accountId)
+    fun getToken(info: String): TokenResponse {
+        val accessToken: String = generateAccessToken(info, jwtProperties.accessExp)
+        val refreshToken: String = generateSaveRefreshToken(info)
         return TokenResponse(accessToken = accessToken, refreshToken = refreshToken)
     }
 
-    fun generateSaveRefreshToken(accountId: String): String {
-        val newRefreshToken: String = generateRefreshToken(accountId, jwtProperties.refreshExp)
+    fun generateSaveRefreshToken(info: String): String {
+        val newRefreshToken: String = generateRefreshToken(info, jwtProperties.refreshExp)
         val currentTimeMillis = System.currentTimeMillis()
         val expirationTime = currentTimeMillis + (jwtProperties.refreshExp * 1000)
         refreshTokenRepository.save(
             RefreshToken(
-                name = accountId,
+                name = info,
                 refreshToken = newRefreshToken,
                 refreshTokenTime = expirationTime
             )
@@ -43,18 +43,18 @@ class JwtTokenProvider(
         return newRefreshToken
     }
 
-    private fun generateAccessToken(accountId: String, expiration: Long): String {
+    private fun generateAccessToken(info: String, expiration: Long): String {
         return Jwts.builder().signWith(SignatureAlgorithm.HS256, jwtProperties.secret)
-            .setSubject(accountId)
+            .setSubject(info)
             .setHeaderParam("typ", "access")
             .setIssuedAt(Date())
             .setExpiration(Date(System.currentTimeMillis() + expiration * 1000))
             .compact()
     }
 
-    private fun generateRefreshToken(accountId: String, expiration: Long): String {
+    private fun generateRefreshToken(info: String, expiration: Long): String {
         return Jwts.builder().signWith(SignatureAlgorithm.HS256, jwtProperties.secret)
-            .setSubject(accountId)
+            .setSubject(info)
             .setHeaderParam("typ", "refresh")
             .setIssuedAt(Date())
             .setExpiration(Date(System.currentTimeMillis() + expiration * 1000))
