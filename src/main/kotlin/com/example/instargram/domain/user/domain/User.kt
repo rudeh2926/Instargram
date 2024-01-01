@@ -34,7 +34,7 @@ class User(
     @Column(name = "profile_recommend", nullable = false, columnDefinition = "VARCHAR(100)")
     val recommend: Boolean? = null,
 
-    @Column(name = "year", nullable = false, columnDefinition = "Integer(2500)")
+    @Column(name = "year", nullable = false, columnDefinition = "Integer(255)")
     val year: Int,
 
     @Column(name = "month", nullable = false, columnDefinition = "Integer(12)")
