@@ -49,6 +49,8 @@ dependencies {
 
 	implementation ("org.springdoc:springdoc-openapi-ui:1.6.11")
 
+    implementation ("net.nurigo:javaSDK:2.2")
+
 }
 
 tasks.withType<KotlinCompile> {
