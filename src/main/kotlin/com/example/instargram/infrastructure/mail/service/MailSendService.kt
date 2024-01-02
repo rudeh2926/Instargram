@@ -24,7 +24,7 @@ class MailSendService(
     }
 
     fun sendMail(email: String): String {
-        mailRepository.deleteAll()
+        mailRepository.deleteById(email)
         val verificationCode = generateVerificationCode()
         val message = SimpleMailMessage()
         message.setTo(email)

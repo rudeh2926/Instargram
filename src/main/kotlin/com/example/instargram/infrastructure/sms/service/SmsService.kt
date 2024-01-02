@@ -44,6 +44,7 @@ class SmsService(
     }
 
     fun sendSMS(phoneNumber: String): String {
+        smsRepository.deleteById(phoneNumber)
         val sms = Message(apiKey, apiSecret)
 
         val randomNum = createRandomNumber()
