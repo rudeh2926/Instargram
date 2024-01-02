@@ -23,7 +23,7 @@ class MailSendService(
         return codeBuilder.toString()
     }
 
-    fun send(email: String): String {
+    fun sendMail(email: String): String {
         mailRepository.deleteAll()
         val verificationCode = generateVerificationCode()
         val message = SimpleMailMessage()

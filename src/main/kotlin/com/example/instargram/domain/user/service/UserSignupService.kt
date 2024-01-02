@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class UserSignupService(
     private val userRepository: UserRepository,
-    private val mailSendService: MailSendService,
     private val mailRepository: MailRepository,
     private val passwordEncoder: PasswordEncoder
 ) {
@@ -24,7 +23,6 @@ class UserSignupService(
 
         val info = request.info
         if (info.contains("@")) {
-            mailSendService.send(request.info)
             val validEmailCode = mailRepository.findByIdOrNull(request.info)?: throw EmailCodeMissMatchException
 
             val user = User(
