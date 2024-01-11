@@ -21,26 +21,10 @@ import javax.servlet.http.HttpServletRequest
 class JwtTokenProvider(
     private val jwtProperties: JwtProperties,
     private val authDetailsService: AuthDetailsService,
-    private val refreshTokenRepository: RefreshTokenRepository
 ) {
     fun getToken(info: String): TokenResponse {
         val accessToken: String = generateAccessToken(info, jwtProperties.accessExp)
-        val refreshToken: String = generateSaveRefreshToken(info)
-        return TokenResponse(accessToken = accessToken, refreshToken = refreshToken)
-    }
-
-    fun generateSaveRefreshToken(info: String): String {
-        val newRefreshToken: String = generateRefreshToken(info, jwtProperties.refreshExp)
-        val currentTimeMillis = System.currentTimeMillis()
-        val expirationTime = currentTimeMillis + (jwtProperties.refreshExp * 1000)
-        refreshTokenRepository.save(
-            RefreshToken(
-                name = info,
-                refreshToken = newRefreshToken,
-                refreshTokenTime = expirationTime
-            )
-        )
-        return newRefreshToken
+        return TokenResponse(accessToken = accessToken)
     }
 
     private fun generateAccessToken(info: String, expiration: Long): String {
@@ -52,14 +36,6 @@ class JwtTokenProvider(
             .compact()
     }
 
-    private fun generateRefreshToken(info: String, expiration: Long): String {
-        return Jwts.builder().signWith(SignatureAlgorithm.HS256, jwtProperties.secret)
-            .setSubject(info)
-            .setHeaderParam("typ", "refresh")
-            .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + expiration * 1000))
-            .compact()
-    }
 
     fun resolveToken(request: HttpServletRequest): String? {
         val bearer: String? = request.getHeader("Authorization")
